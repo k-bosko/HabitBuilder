@@ -1,0 +1,25 @@
+{
+  "name": "HabitBuilder",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Katerina Bosko, Anshul Mathew",
+  "scripts": {
+    "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1"
+  },
+  "license": "MIT"
+}
