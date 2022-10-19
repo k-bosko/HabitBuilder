@@ -4,9 +4,11 @@
  * Module dependencies.
  */
 
-let app = require('../app');
-let debug = require('debug')('habitbuilder:server');
-let http = require('http');
+import app from '../app.js';
+import debug from 'debug';
+import http from 'http';
+
+debug('habitbuilder:server');
 
 /**
  * Get port from environment and store in Express.

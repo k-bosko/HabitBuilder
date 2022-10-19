@@ -1,12 +1,16 @@
 module.exports = {
     'env': {
         'browser': true,
-        'commonjs': true,
-        'es2021': true
+        'node': true,
+        'es6': true,
     },
-    'extends': 'eslint:recommended',
+    'extends': ['eslint:recommended', 'prettier'],
     'parserOptions': {
-        'ecmaVersion': 12
+        'ecmaVersion': 'latest',
+        'sourceType': 'module',
+        'ecmaFeatures': {
+            'jsx': true,
+        }
     },
     'rules': {
         'indent': [
@@ -25,8 +29,8 @@ module.exports = {
             'error',
             'always'
         ],
-        'no-console':0,
+        'no-console': 0,
         'no-unused-vars': 1,
         'no-var': 1,
-    }
+    },
 };
