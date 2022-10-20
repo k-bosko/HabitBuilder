@@ -14,13 +14,13 @@ const __dirname = dirname(__filename);
 /***** RENDERING ********/
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-    res.sendFile(join(__dirname, "..", "public", "index.html"));
+router.get("/", (req, res) => {
+    res.status(200).sendFile(join(__dirname, "..", "public", "index.html"));
 });
 
 /* GET myhabits page. */
-router.get("/myhabits", function (req, res, next) {
-  res.sendFile(join(__dirname, "..", "public", "myhabits.html"));
+router.get("/myhabits", (req, res) => {
+  res.status(200).sendFile(join(__dirname, "..", "public", "myhabits.html"));
 });
 
 
@@ -29,16 +29,19 @@ router.get("/myhabits", function (req, res, next) {
 /* GET myhabits page. */
 router.get("/api/myhabits", async function (req, res, next) {
     const myhabits = await mongo.getHabits();
-
-    // for (let habit of myhabits){
-    //     console.log("habit:", habit.habit_name);
-    // }
-    res.json(myhabits);
+    res.status(200).json(myhabits);
 
 });
 
-
-
 /* ------Katerina end----- */
+
+/***** HANDLING 404 ********/
+//NOTE must be at the end
+
+router.all('*', (req, res) => {
+    res.status(404).sendFile(join(__dirname, "..", "public", "404.html"));
+});
+
+
 
 export default router;

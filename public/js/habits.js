@@ -6,7 +6,7 @@ function HabitsModule() {
   async function loadHabits() {
     const res = await fetch('http://localhost:3000/api/myhabits');
     if (!(res.ok && res.status === 200)) {
-        return showError("Error downloading the listings", res);
+        return console.log("Error downloading the habits", res);
     }
     const habits = await res.json();
     console.log("habits", habits);
@@ -42,7 +42,6 @@ function HabitsModule() {
 
     habitsSection.appendChild(habitsDiv);
 
-    // console.log("CANVAS", canvasSection);
   }
 
   habitsModule.loadHabits = loadHabits;
