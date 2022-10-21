@@ -8,23 +8,50 @@
     width: 3.125rem;
     height: 3.125rem;
     border-radius: 3.75rem;
-    font-size: 1rem;
     text-align: center;
+    font-size: 1.5rem;
 }
 
-.custom-plus-button:hover {
-  background-color: #13E3B9;
-  color: white;
-  border-radius: 10rem;
+.custom-plus-button:hover{
+    background-color: #13E3B9;
+    color: white;
+    border-radius: 10rem;
+    font-size: 1.5rem;
 }
+
+.custom-delete-button {
+    border-color: red;
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 3.75rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+button.custom-delete-button:hover {
+    background-color: red;
+    color: white;
+    border-radius: 10rem;
+    font-size: 1.5rem;
+}
+
+button.custom-delete-button.btn.dropdown-toggle.show {
+    background-color: red;
+    color: white;
+    border-radius: 10rem;
+    font-size: 1.5rem;
+}
+
 
 h1 {
     margin-top:  3rem;
     margin-bottom:  3rem;
 }
-h3 {
+
+h3.habit-title {
     text-align: center;
 }
+
 
 .mycanvas {
     margin: 2rem auto 2rem auto;

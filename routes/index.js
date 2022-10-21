@@ -11,9 +11,6 @@ const __dirname = dirname(__filename);
 /* ------Katerina----- */
 
 
-
-
-
 /* GET home page. */
 router.get("/", (req, res) => {
     res.sendFile(join(__dirname, "..", "public", "index.html"));
