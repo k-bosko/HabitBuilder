@@ -67,14 +67,14 @@ async function deleteHabit(habitId) {
 
     const collection = db.collection("habits");
     
-    
     const result = await collection.deleteOne({ id: habitId});
     if (result.deletedCount === 1) {
       console.log("Successfully deleted one document.");
     } else {
       console.log("No documents matched the query. Deleted 0 documents.");
     }
-
+    return result;
+    
   } finally {
     await client.close();
   }

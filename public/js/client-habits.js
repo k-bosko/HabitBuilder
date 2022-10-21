@@ -58,8 +58,10 @@ function HabitsModule() {
     for (let h of habits) {
         output += `
         <li>
-          <input type="hidden" value="${h.name}"/>
-          <a class="dropdown-item" href="#">${h.name}</a>
+            <form id="deleteHabitForm" action="/api/myhabits/delete/" method="POST">
+            <input type="hidden" name="habitId" value="${h.id}"/>
+            <a class="dropdown-item" href="#" onclick="document.getElementById('deleteHabitForm').submit()">${h.name}</a>
+            </form>
         </li>`;
     }
 
@@ -68,6 +70,7 @@ function HabitsModule() {
     habitsDeleteDiv.appendChild(habitsUl);
 
   }
+
 
   habitsModule.loadHabits = loadHabits;
 

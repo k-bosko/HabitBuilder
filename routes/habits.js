@@ -13,23 +13,29 @@ const __dirname = dirname(__filename);
 
 /* GET myhabits */
 router.get("/", async function (req, res, next) {
+    console.log("INSIDE DELETE");
     const myhabits = await mongo.getHabits();
     console.log("got habits", myhabits);
     res.status(200).json(myhabits);
 });
 
 /* DELETE myhabits */
-// router.delete("/:id", async function (req, res, next) {
-router.get("/:id", async function (req, res, next) {
-    const habitId = Number(req.params.id);
-    const habit = await mongo.getHabit(habitId);
+router.post("/delete", async function (req, res, next) {
+    console.log("INSIDE DELETE");
+    console.log("req", req.params);
 
-    console.log("will delete habit", habit);
-    await mongo.deleteHabit(habitId);
+    const habitId = Number(req.body.habitId);
 
-    console.log("Habit deleted");
+    console.log("will delete habitId", habitId);
+    const result = await mongo.deleteHabit(habitId);
 
-    res.redirect(`../../myhabits`);
+    if (result.acknowledged){
+        console.log("habit was deleted");
+        res.redirect(`../../../myhabits`);
+    }
+    else {
+        console.log("no habit was deleted");
+    }
     //TODO add error handling
 });
 
