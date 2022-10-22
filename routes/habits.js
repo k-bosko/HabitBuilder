@@ -12,15 +12,16 @@ const __dirname = dirname(__filename);
 /* ------Katerina----- */
 
 /* GET myhabits */
-router.get("/", async function (req, res, next) {
+router.get("/", async function (req, res) {
+
     const myhabits = await mongo.getHabits();
     console.log("got habits", myhabits);
     res.status(200).json(myhabits);
 });
 
 /* DELETE myhabits */
-router.delete("/:id", async function (req, res, next) {
-    console.log("INSIDE DELETE");
+router.delete("/:id", async function (req, res) {
+
     const habitId = Number(req.params.id);  
 
     console.log("will delete habitId", habitId);
@@ -34,6 +35,21 @@ router.delete("/:id", async function (req, res, next) {
         console.log("no habit was deleted");
     }
     
+});
+
+/* POST myhabits log */
+router.post("/:id/log", async function (req, res){
+
+    const habitId = Number(req.params.id);
+    console.log("habitId=", habitId);
+
+    const logUnits = Number(req.body.logUnits);
+    console.log("logUnits=", logUnits);
+
+    await mongo.insertLogUnits(habitId, logUnits);
+
+    //TODO add error handling
+
 });
 
 

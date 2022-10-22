@@ -74,17 +74,65 @@ async function deleteHabit(habitId) {
       console.log("No documents matched the query. Deleted 0 documents.");
     }
     return result;
-    
+
   } finally {
     await client.close();
   }
 }
+
+
+async function insertLogUnits(habitId, logUnits) {
+  let client;
+
+  try {
+    const url = "mongodb://0.0.0.0:27017/";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("HabitBuilder");
+
+    const collection = db.collection("habits");
+
+    console.log("got HabitId", habitId);
+    console.log("got LogUnits", logUnits);
+    
+    const query = {
+      id: habitId
+      //TODO add date? 
+    };
+    // const tmp = await collection.findOne(query);
+    // console.log("found", tmp);
+
+    //TODO getLogUnits();
+    //need to update the logUnits += getLogUnits();
+
+    const update = {
+      $set: {
+        logUnits: logUnits,
+      },
+    };
+
+    const result = await collection.updateOne(query, update);
+    console.log(result);
+
+    return result;
+
+  } finally {
+    await client.close();
+  }
+}
+
 /* ------Katerina end----- */
 
 export default {
   getHabits,
   getHabit,
-  deleteHabit
+  deleteHabit,
+  insertLogUnits
 }
 
 

@@ -3,6 +3,7 @@ function LoadHabitsModule() {
 
   const habitsSection = document.querySelector("div#habits");
   const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
+  const modalDiv = document.querySelector("div#modal-on-log");
 
   async function loadHabits() {
     const res = await fetch('http://localhost:3000/api/myhabits');
@@ -42,26 +43,26 @@ function LoadHabitsModule() {
       </div>
       <div class="d-flex justify-content-center">
         <h3>${h.name}</h3>
-        <button type="button" class="btn ms-4 log-btn">Log</button>
-      </div>
+        <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit(${h.id})">Log</button>
     `;
 
+        // <button type="button" class="btn ms-4 log-btn" data-bs-toggle="modal"
+        // data-bs-target="#modalOnLogBtn" data-habit-id='${h.id}'>Log</button>
     habitsSection.appendChild(habitsDiv);
-
   }
 
   function renderHabitsForDelete(habits){
 
     const habitsUl = document.createElement("ul");
     habitsUl.className = "dropdown-menu";
-    habitsUl.setAttribute("id","dropdown-delete-ul");
+    habitsUl.setAttribute("id", "dropdown-delete-ul");
 
     let output = '';
 
     for (let h of habits) {
       output += `
       <li>
-          <a class="dropdown-item" href="#" onclick="deleteHabit(${h.id})">${h.name}</a>
+          <a class="dropdown-item" href="#" onclick="deleteHabit(${h.id});">${h.name}</a>
       </li>`;
     } 
 
@@ -71,16 +72,8 @@ function LoadHabitsModule() {
 
   }
 
+
   loadHabitsModule.loadHabits = loadHabits;
 
   return loadHabitsModule;
 } //end of loadHabitsModule
-
-async function deleteHabit(id) {
-  console.log("IN DELETE HABIT CLIENT START");
-  const res = await fetch(`/api/myhabits/${id}`, {'method': 'delete'});
-  // remove on UI
-  if (res.ok){
-    location.reload();
-  }
-};
