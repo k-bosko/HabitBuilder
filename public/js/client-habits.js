@@ -40,7 +40,10 @@ function LoadHabitsModule() {
       `<div class="container">
       <canvas class="col-sm-12 col-md-8 mycanvas"></canvas>
       </div>
-      <h3 class="habit-title">${h.name}</h3>
+      <div class="d-flex justify-content-center">
+        <h3>${h.name}</h3>
+        <button type="button" class="btn ms-4 log-btn">Log</button>
+      </div>
     `;
 
     habitsSection.appendChild(habitsDiv);
