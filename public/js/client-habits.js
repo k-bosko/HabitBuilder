@@ -1,5 +1,5 @@
-function HabitsModule() {
-  const habitsModule = {};
+function LoadHabitsModule() {
+  const loadHabitsModule = {};
 
   const habitsSection = document.querySelector("div#habits");
   const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
@@ -10,11 +10,11 @@ function HabitsModule() {
         return console.log("Error downloading the habits", res);
     }
     const habits = await res.json();
-    console.log("in HabitsModule habits", habits);
+    console.log("in LoadHabitsModule habits", habits);
     renderHabits(habits);
 
     // TODO: use createElement in renderHabit
-    habitsModule.canvases = document.querySelectorAll(".mycanvas");
+    loadHabitsModule.canvases = document.querySelectorAll(".mycanvas");
   }
 
 
@@ -56,14 +56,11 @@ function HabitsModule() {
     let output = '';
 
     for (let h of habits) {
-        output += `
-        <li>
-            <form id="deleteHabitForm" action="/api/myhabits/delete/" method="POST">
-            <input type="hidden" name="habitId" value="${h.id}"/>
-            <a class="dropdown-item" href="#" onclick="document.getElementById('deleteHabitForm').submit()">${h.name}</a>
-            </form>
-        </li>`;
-    }
+      output += `
+      <li>
+          <a class="dropdown-item" href="#" onclick="deleteHabit(${h.id})">${h.name}</a>
+      </li>`;
+    } 
 
     habitsUl.innerHTML = output;
       
@@ -71,10 +68,16 @@ function HabitsModule() {
 
   }
 
+  loadHabitsModule.loadHabits = loadHabits;
 
-  habitsModule.loadHabits = loadHabits;
+  return loadHabitsModule;
+} //end of loadHabitsModule
 
-  return habitsModule;
-} //end of habitsModule
-
-
+async function deleteHabit(id) {
+  console.log("IN DELETE HABIT CLIENT START");
+  const res = await fetch(`/api/myhabits/${id}`, {'method': 'delete'});
+  // remove on UI
+  if (res.ok){
+    location.reload();
+  }
+};
