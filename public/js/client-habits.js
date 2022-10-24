@@ -46,8 +46,7 @@ function LoadHabitsModule() {
         <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit(${h.id})">Log</button>
     `;
 
-        // <button type="button" class="btn ms-4 log-btn" data-bs-toggle="modal"
-        // data-bs-target="#modalOnLogBtn" data-habit-id='${h.id}'>Log</button>
+  
     habitsSection.appendChild(habitsDiv);
   }
 
@@ -62,7 +61,8 @@ function LoadHabitsModule() {
     for (let h of habits) {
       output += `
       <li>
-          <a class="dropdown-item" href="#" onclick="deleteHabit(${h.id});">${h.name}</a>
+          <a class="dropdown-item" href="#" onclick="deleteHabit(${h.id});">${h.name}
+          <div class="deleteX"><i class="bi bi-x"></i></div></a>
       </li>`;
     } 
 
@@ -71,7 +71,6 @@ function LoadHabitsModule() {
     habitsDeleteDiv.appendChild(habitsUl);
 
   }
-
 
   loadHabitsModule.loadHabits = loadHabits;
 

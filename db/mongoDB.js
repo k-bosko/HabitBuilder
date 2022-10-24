@@ -27,29 +27,30 @@ async function getHabits() {
     }
 }
 
-async function getHabit(habitId) {
-  let client;
-    try {
-      const url = "mongodb://0.0.0.0:27017/";
-      //^^connect to protocol
-      client = new MongoClient(url);
 
-      await client.connect();
+// async function getHabit(habitId) {
+//   let client;
+//     try {
+//       const url = "mongodb://0.0.0.0:27017/";
+//       //^^connect to protocol
+//       client = new MongoClient(url);
 
-      console.log("Connected to Mongo Server");
+//       await client.connect();
 
-      const db = client.db("HabitBuilder");
+//       console.log("Connected to Mongo Server");
 
-      const collection = db.collection("habits");
+//       const db = client.db("HabitBuilder");
 
-      const habit = await collection.findOne({id: habitId});
+//       const collection = db.collection("habits");
+
+//       const habit = await collection.findOne({id: habitId});
       
-      return habit;
+//       return habit;
 
-    } finally {
-      await client.close();
-    }
-}
+//     } finally {
+//       await client.close();
+//     }
+// }
 
 async function deleteHabit(habitId) {
   let client;
@@ -99,24 +100,21 @@ async function insertLogUnits(habitId, logUnits) {
 
     console.log("got HabitId", habitId);
     console.log("got LogUnits", logUnits);
-    
+      
+
     const query = {
       id: habitId
       //TODO add date? 
     };
-    // const tmp = await collection.findOne(query);
-    // console.log("found", tmp);
-
-    //TODO getLogUnits();
-    //need to update the logUnits += getLogUnits();
-
-    const update = {
-      $set: {
+    
+    //NOTE: new logUnits are added to array
+    const append = {
+      $push: {
         logUnits: logUnits,
       },
     };
 
-    const result = await collection.updateOne(query, update);
+    const result = await collection.updateOne(query, append);
     console.log(result);
 
     return result;
@@ -130,9 +128,9 @@ async function insertLogUnits(habitId, logUnits) {
 
 export default {
   getHabits,
-  getHabit,
   deleteHabit,
-  insertLogUnits
+  insertLogUnits,
+  // getHabit,
 }
 
 

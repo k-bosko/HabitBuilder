@@ -73,6 +73,16 @@ button.custom-delete-button.btn.dropdown-toggle.show {
 }
 
 
+.deleteX{
+    display:  none;
+    float: right;
+}
+
+.dropdown-item:hover .deleteX {
+    display:  block;
+    float: right;
+}
+
 h1 {
     margin-top:  3rem;
     margin-bottom:  3rem;
