@@ -1,43 +1,43 @@
 function LoadHabitsModule() {
-  const loadHabitsModule = {};
+    const loadHabitsModule = {};
 
-  const habitsSection = document.querySelector("div#habits");
-  const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
-  const modalDiv = document.querySelector("div#modal-on-log");
+    const habitsSection = document.querySelector("div#habits");
+    const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
+    const modalDiv = document.querySelector("div#modal-on-log");
 
-  async function loadHabits() {
-    const res = await fetch('http://localhost:3000/api/myhabits');
-    if (!(res.ok && res.status === 200)) {
-        return console.log("Error downloading the habits", res);
+    async function loadHabits() {
+        const res = await fetch("http://localhost:3000/api/myhabits");
+        if (!(res.ok && res.status === 200)) {
+            return console.log("Error downloading the habits", res);
+        }
+        const habits = await res.json();
+        console.log("in LoadHabitsModule habits", habits);
+        renderHabits(habits);
+
+        // TODO: use createElement in renderHabit
+        loadHabitsModule.canvases = document.querySelectorAll(".mycanvas");
     }
-    const habits = await res.json();
-    console.log("in LoadHabitsModule habits", habits);
-    renderHabits(habits);
-
-    // TODO: use createElement in renderHabit
-    loadHabitsModule.canvases = document.querySelectorAll(".mycanvas");
-  }
 
 
-  function renderHabits(habits) {
+    function renderHabits(habits) {
     //TODO think about limiting number of habits
     // on page and adding another page if too many habits created?
 
-    //clear it out first
-    habitsSection.innerHTML = "";
+        //clear it out first
+        habitsSection.innerHTML = "";
 
-    for (let h of habits) {
-        renderHabit(h);
+        for (let h of habits) {
+            renderHabit(h);
+        }
+        renderHabitsForDelete(habits);
     }
-    renderHabitsForDelete(habits);
-  }
 
-  function renderHabit(h) {
-    console.log("render habit", h.name);
-    const habitsDiv = document.createElement("div");
+    function renderHabit(h) {
+        console.log("render habit", h.name);
+        const habitsDiv = document.createElement("div");
 
-    // TODO: use createElement for canvas here
-    habitsDiv.innerHTML =
+        // TODO: use createElement for canvas here
+        habitsDiv.innerHTML =
       `<div class="container">
       <canvas class="col-sm-12 col-md-8 mycanvas"></canvas>
       </div>
@@ -47,32 +47,32 @@ function LoadHabitsModule() {
     `;
 
   
-    habitsSection.appendChild(habitsDiv);
-  }
+        habitsSection.appendChild(habitsDiv);
+    }
 
-  function renderHabitsForDelete(habits){
+    function renderHabitsForDelete(habits){
 
-    const habitsUl = document.createElement("ul");
-    habitsUl.className = "dropdown-menu";
-    habitsUl.setAttribute("id", "dropdown-delete-ul");
+        const habitsUl = document.createElement("ul");
+        habitsUl.className = "dropdown-menu";
+        habitsUl.setAttribute("id", "dropdown-delete-ul");
 
-    let output = '';
+        let output = "";
 
-    for (let h of habits) {
-      output += `
+        for (let h of habits) {
+            output += `
       <li>
           <a class="dropdown-item" href="#" onclick="deleteHabit(${h.id});">${h.name}
           <div class="deleteX"><i class="bi bi-x"></i></div></a>
       </li>`;
-    } 
+        } 
 
-    habitsUl.innerHTML = output;
+        habitsUl.innerHTML = output;
       
-    habitsDeleteDiv.appendChild(habitsUl);
+        habitsDeleteDiv.appendChild(habitsUl);
 
-  }
+    }
 
-  loadHabitsModule.loadHabits = loadHabits;
+    loadHabitsModule.loadHabits = loadHabits;
 
-  return loadHabitsModule;
+    return loadHabitsModule;
 } //end of loadHabitsModule

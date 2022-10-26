@@ -1,136 +1,97 @@
-import { Collection, ObjectId, MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 
 
-/* ------Katerina----- */
-async function getHabits() {
-  let client;
-    try {
-      const url = "mongodb://0.0.0.0:27017/";
-      //^^connect to protocol
-      client = new MongoClient(url);
+function MongoHabitsModule() {
+    const db = {};
+    const url = process.env.MONGO_URL || "mongodb://0.0.0.0:27017/";
+    const DB_NAME = "HabitBuilder";
+    const COLLECTION_NAME = "habits";
 
-      await client.connect();
+    /* ------Katerina----- */
+    async function getHabits() {
+        let client;
 
-      console.log("Connected to Mongo Server");
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
 
-      const db = client.db("HabitBuilder");
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_NAME);
 
-      const collection = db.collection("habits");
-
-
-      const habits = await collection.find().toArray();
-
-      return habits;
-
-    } finally {
-      await client.close();
-    }
-}
-
-
-// async function getHabit(habitId) {
-//   let client;
-//     try {
-//       const url = "mongodb://0.0.0.0:27017/";
-//       //^^connect to protocol
-//       client = new MongoClient(url);
-
-//       await client.connect();
-
-//       console.log("Connected to Mongo Server");
-
-//       const db = client.db("HabitBuilder");
-
-//       const collection = db.collection("habits");
-
-//       const habit = await collection.findOne({id: habitId});
-      
-//       return habit;
-
-//     } finally {
-//       await client.close();
-//     }
-// }
-
-async function deleteHabit(habitId) {
-  let client;
-
-  try {
-    const url = "mongodb://0.0.0.0:27017/";
-
-    client = new MongoClient(url);
-
-    await client.connect();
-
-    console.log("Connected to Mongo Server");
-
-    const db = client.db("HabitBuilder");
-
-    const collection = db.collection("habits");
-    
-    const result = await collection.deleteOne({ id: habitId});
-    if (result.deletedCount === 1) {
-      console.log("Successfully deleted one document.");
-    } else {
-      console.log("No documents matched the query. Deleted 0 documents.");
-    }
-    return result;
-
-  } finally {
-    await client.close();
-  }
-}
-
-
-async function insertLogUnits(habitId, logUnits) {
-  let client;
-
-  try {
-    const url = "mongodb://0.0.0.0:27017/";
-
-    client = new MongoClient(url);
-
-    await client.connect();
-
-    console.log("Connected to Mongo Server");
-
-    const db = client.db("HabitBuilder");
-
-    const collection = db.collection("habits");
-
-    console.log("got HabitId", habitId);
-    console.log("got LogUnits", logUnits);
-      
-
-    const query = {
-      id: habitId
-      //TODO add date? 
-    };
-    
-    //NOTE: new logUnits are added to array
-    const append = {
-      $push: {
-        logUnits: logUnits,
-      },
+            const habits = await habitsCollection.find().toArray();
+            return habits;
+        } finally {
+            await client.close();
+        }
     };
 
-    const result = await collection.updateOne(query, append);
-    console.log(result);
+    async function deleteHabit(habitId) {
+        let client;
 
-    return result;
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
 
-  } finally {
-    await client.close();
-  }
-}
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_NAME);
 
-/* ------Katerina end----- */
+            const result = await habitsCollection.deleteOne({ id: habitId });
+            if (result.deletedCount === 1) {
+                console.log("Successfully deleted one document.");
+            } else {
+                console.log("No documents matched the query. Deleted 0 documents.");
+            }
+            return result;
 
-export default {
-  getHabits,
-  deleteHabit,
-  insertLogUnits,
-  // getHabit,
-}
+        } finally {
+            await client.close();
+        }
+    }
+
+    async function insertLogUnits(habitId, logUnits) {
+        console.log("got HabitId", habitId);
+        console.log("got LogUnits", logUnits);
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_NAME);
+
+            const query = {
+                id: habitId
+                //TODO add date? 
+            };
+
+            //NOTE: new logUnits are added to array
+            const append = {
+                $push: {
+                    logUnits: logUnits,
+                },
+            };
+
+            const result = await habitsCollection.updateOne(query, append);
+            console.log(result);
+
+            return result;
+
+        } finally {
+            await client.close();
+        }
+    }
 
 
+    db.getHabits = getHabits;
+    db.deleteHabit = deleteHabit;
+    db.insertLogUnits = insertLogUnits;
+    return db;
+
+    /* ------Katerina end----- */
+};
+
+export default MongoHabitsModule();

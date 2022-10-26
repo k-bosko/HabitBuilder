@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "author": "Katerina Bosko, Anshul Mathew",
+  "description": "HabitBuilder app to track custom habits and get awards",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www.js"
