@@ -13,12 +13,12 @@ const __dirname = dirname(__filename);
 
 /* GET home page. */
 router.get("/", (req, res) => {
-    res.sendFile(join(__dirname, "..", "public", "index.html"));
+    res.redirect("/index.html");
 });
 
 /* GET myhabits page. */
 router.get("/myhabits", (req, res) => {
-    res.sendFile(join(__dirname, "..", "public", "myhabits.html"));
+    res.redirect("/myhabits.html");
 });
 
 router.use((req, res, next) => {

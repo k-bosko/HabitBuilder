@@ -3,7 +3,6 @@ function LoadHabitsModule() {
 
     const habitsSection = document.querySelector("div#habits");
     const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
-    const modalDiv = document.querySelector("div#modal-on-log");
 
     async function loadHabits() {
         const res = await fetch("http://localhost:3000/api/myhabits");

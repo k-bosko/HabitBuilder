@@ -1,36 +1,39 @@
 module.exports = {
-    'env': {
-        'browser': true,
-        'node': true,
-        'es6': true,
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true,
     },
-    'extends': ['eslint:recommended', 'prettier'],
-    'parserOptions': {
-        'ecmaVersion': 'latest',
-        'sourceType': 'module',
-        'ecmaFeatures': {
-            'jsx': true,
+    "extends": ["eslint:recommended", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
         }
     },
-    'rules': {
-        'indent': [
-            'error',
+    "rules": {
+        "indent": [
+            "error",
             4
         ],
-        'linebreak-style': [
-            'error',
-            'unix'
+        "linebreak-style": [
+            "error",
+            "unix"
         ],
-        'quotes': [
-            'error',
-            'double'
+        "quotes": [
+            "error",
+            "double"
         ],
-        'semi': [
-            'error',
-            'always'
+        "semi": [
+            "error",
+            "always"
         ],
-        'no-console': 0,
-        'no-unused-vars': 1,
-        'no-var': 1,
+        "no-console": 0,
+        "no-unused-vars": 1,
+        "no-var": 1,
     },
+    "globals": {
+        "bootstrap": true
+    }
 };

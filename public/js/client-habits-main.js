@@ -1,4 +1,5 @@
- 
+/* global LoadHabitsModule: readable */
+
 async function main() {
     const loadHabitsModule = LoadHabitsModule();
     await loadHabitsModule.loadHabits();
