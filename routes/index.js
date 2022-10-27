@@ -28,19 +28,19 @@ router.get("/myhabits", (req, res) => {
 
 /* ------Anshul Start ----- */
 router.post("/createHabit", fileUpload(), (req, res) => {
-  console.log(req);
-  let sampleFile;
-  if (!req.body.img) {
-    sampleFile = req.files.img;
-    console.log(sampleFile);
-  }
-  // res.send("hello");
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv("./" + sampleFile.name, function (err) {
-    if (err) return res.status(500).send(err);
+    console.log(req);
+    let sampleFile;
+    if (!req.body.img) {
+        sampleFile = req.files.img;
+        console.log(sampleFile);
+    }
+    // res.send("hello");
+    // Use the mv() method to place the file somewhere on your server
+    sampleFile.mv("./" + sampleFile.name, function (err) {
+        if (err) return res.status(500).send(err);
 
-    res.send("Received!!!");
-  });
+        res.send("Received!!!");
+    });
 });
 /* ------Anshul End ----- */
 
