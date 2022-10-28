@@ -76,7 +76,7 @@
                             type="text"
                             class="form-control mx-0 my-1"
                             id="habit-name"
-                            name="habit-name"
+                            name="habitName"
                             placeholder="Enter Habit you want to track"
                             required
                         />
@@ -87,7 +87,7 @@
                             type="text"
                             class="form-control mx-0 my-1"
                             id="goal-per-day"
-                            name="goal-per-day"
+                            name="goalPerDay"
                             placeholder="Enter per day Goal"
                             pattern="[+-]?([0-9]*[.])?[0-9]+"
                             required
@@ -100,7 +100,7 @@
                                         >Start Date</label
                                     >
                                     <input
-                                        name="start-date"
+                                        name="startDate"
                                         type="date"
                                         class="form-control mx-0 my-1"
                                         id="start-date"
@@ -110,16 +110,14 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label
-                                        class="mx-0 my-2"
-                                        for="number-of-days"
+                                    <label class="mx-0 my-2" for="numberOfDays"
                                         >Number of days</label
                                     >
 
                                     <input
                                         class="form-control mx-0 my-1"
                                         list="days"
-                                        name="number-of-days"
+                                        name="numberOfDays"
                                         id="number-of-days"
                                         pattern="^(4|6|8|9|10|12|14|15|16|18|20|22|24|25|26|27|28|30)$"
                                         title="Enter a composite number only from the options provided"
@@ -153,7 +151,7 @@
                                 </div>
                             </div>
                         </div>
-                        <label for="habit-name" class="mx-0 my-2"
+                        <label for="picture" class="mx-0 my-2"
                             >Select Picture</label
                         >
                         <div class="cc-selector mb-3">
@@ -162,12 +160,12 @@
                                 id="mountain"
                                 type="radio"
                                 name="picture"
-                                value="mountain"
+                                value="\public\assets\images\mountain.jpg"
                             />
                             <label class="drinkcard-cc" for="mountain">
                                 <img
                                     class="size"
-                                    src="../assets/images/mountain-1.jpg"
+                                    src="../assets/images/mountain.jpg"
                                 />
                             </label>
                             <input
@@ -175,7 +173,7 @@
                                 class="js-radio"
                                 type="radio"
                                 name="picture"
-                                value="beach"
+                                value="\public\assets\images\beach.jpg"
                                 onclick="EnableDisableTextBox()"
                             />
                             <label class="drinkcard-cc" for="beach">
