@@ -1,6 +1,5 @@
 import { MongoClient } from "mongodb";
 
-
 function MongoHabitsModule() {
     const db = {};
     const url = process.env.MONGO_URL || "mongodb://0.0.0.0:27017/";
@@ -24,7 +23,7 @@ function MongoHabitsModule() {
         } finally {
             await client.close();
         }
-    };
+    }
 
     async function deleteHabit(habitId) {
         let client;
@@ -41,10 +40,11 @@ function MongoHabitsModule() {
             if (result.deletedCount === 1) {
                 console.log("Successfully deleted one document.");
             } else {
-                console.log("No documents matched the query. Deleted 0 documents.");
+                console.log(
+                    "No documents matched the query. Deleted 0 documents."
+                );
             }
             return result;
-
         } finally {
             await client.close();
         }
@@ -64,8 +64,8 @@ function MongoHabitsModule() {
             const habitsCollection = mongo.collection(COLLECTION_NAME);
 
             const query = {
-                id: habitId
-                //TODO add date? 
+                id: habitId,
+                //TODO add date?
             };
 
             //NOTE: new logUnits are added to array
@@ -79,19 +79,59 @@ function MongoHabitsModule() {
             console.log(result);
 
             return result;
-
         } finally {
             await client.close();
         }
     }
 
-
     db.getHabits = getHabits;
     db.deleteHabit = deleteHabit;
     db.insertLogUnits = insertLogUnits;
-    return db;
 
     /* ------Katerina end----- */
-};
+
+    /* ------Anshul Start----- */
+    async function createHabits(
+        habitName,
+        goalPerDay,
+        startDate,
+        numberOfDays,
+        picture
+    ) {
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_NAME);
+
+            let query = {
+                habit: habitName,
+                startDate: startDate,
+                goalPerDay: goalPerDay,
+                numberOfDays: numberOfDays,
+                picture: picture,
+            };
+
+            console.log(query);
+
+            //NOTE: new logUnits are added to array
+
+            const result = await habitsCollection.insertOne(query);
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+    db.createHabits = createHabits;
+    /* ------Anshul End----- */
+
+    return db;
+}
 
 export default MongoHabitsModule();
