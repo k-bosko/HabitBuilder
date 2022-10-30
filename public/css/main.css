@@ -88,7 +88,9 @@ h1 {
     margin-bottom:  3rem;
 }
 
-
+div a {
+    text-decoration:none;
+}
 
 .mycanvas {
     margin: 2rem auto 2rem auto;
