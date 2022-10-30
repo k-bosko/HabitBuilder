@@ -53,7 +53,8 @@ router.post("/createHabit", fileUpload(), async (req, res) => {
                 numberOfDays,
                 picture
             );
-            res.send("Usign custom images");
+            //res.send("Usign custom images");
+            res.redirect("/myhabits.html");
         } catch (e) {
             console.log("Error", e);
             res.status(400).send({ err: e });
@@ -71,7 +72,8 @@ router.post("/createHabit", fileUpload(), async (req, res) => {
             picture
         );
         console.log(req.body.picture);
-        res.send("Usign default images");
+        //res.send("Usign default images");
+        res.redirect("/myhabits.html");
     }
 });
 /* ------Anshul End ----- */
