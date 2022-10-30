@@ -1,5 +1,6 @@
 function LoadHabitsModule() {
     const loadHabitsModule = {};
+    const canvases = {};
 
     const habitsSection = document.querySelector("div#habits");
     const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
@@ -12,15 +13,12 @@ function LoadHabitsModule() {
         const habits = await res.json();
         console.log("in LoadHabitsModule habits", habits);
         renderHabits(habits);
-
-        // TODO: use createElement in renderHabit
-        loadHabitsModule.canvases = document.querySelectorAll(".mycanvas");
     }
 
 
     function renderHabits(habits) {
-    //TODO think about limiting number of habits
-    // on page and adding another page if too many habits created?
+        //TODO think about limiting number of habits
+        // on page and adding another page if too many habits created?
 
         //clear it out first
         habitsSection.innerHTML = "";
@@ -32,24 +30,30 @@ function LoadHabitsModule() {
     }
 
     function renderHabit(h) {
-        console.log("render habit", h.habit);
+        console.log("render habit", h);
         const habitsDiv = document.createElement("div");
-
-        // TODO: use createElement for canvas here
-        habitsDiv.innerHTML =
-      `<div class="container">
-      <canvas class="col-sm-12 col-md-8 mycanvas"></canvas>
-      </div>
-      <div class="d-flex justify-content-center">
-        <h3>${h.habit}</h3>
-        <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit('${h._id}')">Log</button>
-    `;
+        const canvas = document.createElement("canvas");
+        canvas.className = "col-sm-12 col-md-8 mycanvas";
+        const logAndLabel = document.createElement("div");
+        logAndLabel.className = "d-flex justify-content-center";
+        logAndLabel.innerHTML = `
+            <h3>${h.name}</h3>
+            <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit(${h.id})">Log</button>
+        `;
 
 
+        habitsDiv.appendChild(canvas);
+        habitsDiv.appendChild(logAndLabel);
         habitsSection.appendChild(habitsDiv);
+        // TODO: extend this object
+        canvases[h.id] = {
+            image: h.image,
+            canvas: canvas,
+            number_of_days: Number(h.number_of_days),
+        };
     }
 
-    function renderHabitsForDelete(habits){
+    function renderHabitsForDelete(habits) {
 
         const habitsUl = document.createElement("ul");
         habitsUl.className = "dropdown-menu";
@@ -71,6 +75,7 @@ function LoadHabitsModule() {
 
     }
 
+    loadHabitsModule.canvases = canvases;
     loadHabitsModule.loadHabits = loadHabits;
 
     return loadHabitsModule;
