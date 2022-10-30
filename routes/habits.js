@@ -14,6 +14,7 @@ const router = express.Router();
 router.get("/", async function (req, res) {
     const myhabits = await mongo.getHabits();
     console.log("got habits", myhabits);
+
     res.status(200).json(myhabits);
 });
 
