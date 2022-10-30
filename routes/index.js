@@ -19,10 +19,6 @@ router.get("/myhabits", (req, res) => {
     res.redirect("/myhabits.html");
 });
 
-router.use((req, res) => {
-    res.status(404).redirect("/404.html");
-});
-
 /* ------Katerina end----- */
 
 /* ------Anshul Start ----- */
@@ -75,5 +71,9 @@ router.post("/createHabit", fileUpload(), async (req, res) => {
     }
 });
 /* ------Anshul End ----- */
+
+router.use((req, res) => {
+    res.status(404).redirect("/404.html");
+});
 
 export default router;

@@ -37,8 +37,8 @@ function LoadHabitsModule() {
         const logAndLabel = document.createElement("div");
         logAndLabel.className = "d-flex justify-content-center";
         logAndLabel.innerHTML = `
-            <h3>${h.name}</h3>
-            <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit(${h.id})">Log</button>
+            <h3>${h.habit}</h3>
+            <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit('${h._id}')">Log</button>
         `;
 
 
@@ -46,10 +46,10 @@ function LoadHabitsModule() {
         habitsDiv.appendChild(logAndLabel);
         habitsSection.appendChild(habitsDiv);
         // TODO: extend this object
-        canvases[h.id] = {
-            image: h.image,
+        canvases[h._id] = {
+            image: h.picture,
             canvas: canvas,
-            number_of_days: Number(h.number_of_days),
+            numberOfDays: Number(h.numberOfDays),
         };
     }
 
