@@ -1,7 +1,7 @@
 //TODO encapsulate into Module
 
 async function deleteHabit(id) {
-    console.log("IN DELETE HABIT CLIENT START");
+    console.log(`will delete habit with id ${id}`);
     const res = await fetch(`/api/myhabits/${id}`, { "method": "delete" });
     //TODO add error handling
 

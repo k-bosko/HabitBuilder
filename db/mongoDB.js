@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 function MongoHabitsModule() {
     const db = {};
@@ -36,7 +36,8 @@ function MongoHabitsModule() {
             const mongo = client.db(DB_NAME);
             const habitsCollection = mongo.collection(COLLECTION_NAME);
 
-            const result = await habitsCollection.deleteOne({ id: habitId });
+            const result = await habitsCollection.deleteOne(
+                { _id: ObjectId(habitId) });
             if (result.deletedCount === 1) {
                 console.log("Successfully deleted one document.");
             } else {
@@ -64,7 +65,7 @@ function MongoHabitsModule() {
             const habitsCollection = mongo.collection(COLLECTION_NAME);
 
             const query = {
-                id: habitId,
+                _id: ObjectId(habitId),
                 //TODO add date?
             };
 

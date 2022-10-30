@@ -19,7 +19,7 @@ router.get("/", async function (req, res) {
 
 /* DELETE myhabits */
 router.delete("/:id", async function (req, res) {
-    const habitId = Number(req.params.id);
+    const habitId = req.params.id;
 
     console.log("will delete habitId", habitId);
     const result = await mongo.deleteHabit(habitId);
@@ -33,31 +33,31 @@ router.delete("/:id", async function (req, res) {
 });
 /* ------Katerina end ----- */
 
-// /* ------Anshul Start ----- */
-// router.post("/createHabit", fileUpload(), (req, res) => {
-//     console.log(req);
-//     console.log(res);
-//     res.send("Received!!!");
+/* ------Anshul Start ----- */
+router.post("/createHabit", fileUpload(), (req, res) => {
+    console.log(req);
+    console.log(res);
+    res.send("Received!!!");
 
-// let sampleFile = req.files.fileName;
+  let sampleFile = req.files.fileName;
 
-// // Use the mv() method to place the file somewhere on your server
-// sampleFile.mv("./" + sampleFile.name, function (err) {
-//   if (err) return res.status(500).send(err);
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv("./" + sampleFile.name, function (err) {
+    if (err) return res.status(500).send(err);
 
-//   res.send("Received!!!");
-// });
-// });
+    res.send("Received!!!");
+  });
+});
 // /* ------Anshul End ----- */
 
 /* ------Katerina start ----- */
 /* POST myhabits log */
 router.post("/:id/log", async function (req, res) {
-    const habitId = Number(req.params.id);
-    console.log("habitId=", habitId);
+    const habitId = req.params.id;
+    console.log(`habitId = ${habitId}`);
 
     const logUnits = Number(req.body.logUnits);
-    console.log("logUnits=", logUnits);
+    console.log(`logUnits = ${logUnits}`);
 
     await mongo.insertLogUnits(habitId, logUnits);
 
