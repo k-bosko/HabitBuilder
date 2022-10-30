@@ -5,11 +5,11 @@ function CanvasModule() {
 
     //TODO extend factorize with other options from create-habit.html
     const factorize = {
-        4: {"rows": 2, "cols": 2},
-        6: {"rows": 2, "cols": 3},
-        8: {"rows": 4, "cols": 4}, 
-        9: {"rows": 3, "cols": 3}
-
+        "4": {"rows": 2, "cols": 2},
+        "6": {"rows": 2, "cols": 3},
+        "8": {"rows": 4, "cols": 4},
+        "9": {"rows": 3, "cols": 3},
+        "12": {"rows": 4, "cols": 3},
     };
 
     class Puzzle {
@@ -27,8 +27,8 @@ function CanvasModule() {
         for (const [habitId, canvasObject] of Object.entries(_canvases)) {
             const canvas = canvasObject.canvas;
             const image = canvasObject.image;
-            const rows = factorize[canvasObject.number_of_days].rows;
-            const cols = factorize[canvasObject.number_of_days].cols;
+            const rows = factorize[canvasObject.numberOfDays].rows;
+            const cols = factorize[canvasObject.numberOfDays].cols;
 
             _puzzles.push(new Puzzle(rows, cols, image, canvas));
         }
