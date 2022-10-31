@@ -1,6 +1,4 @@
 import express from "express";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
 import fileUpload from "express-fileupload";
 import mongo from "../db/mongoDB.js";
 

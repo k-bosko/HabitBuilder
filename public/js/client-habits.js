@@ -33,14 +33,14 @@ function LoadHabitsModule() {
         console.log("render habit", h);
         const habitsDiv = document.createElement("div");
         const canvas = document.createElement("canvas");
-        canvas.className = "col-sm-12 col-md-8 mycanvas";
+        // canvas.className = "col-sm-12 col-md-8 mycanvas";
+        canvas.className = "mycanvas";
         const logAndLabel = document.createElement("div");
         logAndLabel.className = "d-flex justify-content-center";
         logAndLabel.innerHTML = `
             <h3>${h.habit}</h3>
             <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit('${h._id}')">Log</button>
         `;
-
 
         habitsDiv.appendChild(canvas);
         habitsDiv.appendChild(logAndLabel);

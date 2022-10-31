@@ -6,11 +6,10 @@ async function main() {
 
     const canvasModule = CanvasModule();
     canvasModule.init(loadHabitsModule.canvases);
+    // canvasModule.renderImages();
 
-    canvasModule.renderImages();
+    console.log("LOAD HABITS MODULE", loadHabitsModule.canvases);
 
-    // console.log("LOAD HABITS MODULE", loadHabitsModule.canvases);  
-  
 }
 
 document.addEventListener("DOMContentLoaded", main);
