@@ -170,7 +170,19 @@ function CanvasModule() {
             for (const piece of this.pieces) {
                 openPieces[piece.index] = piece.isDrawn;
             }
+            this.openPieces = openPieces;
             return openPieces;
+        }
+
+        async isPuzzleCompleted() {
+            const openPieces = this.getOpenPieces();
+            this.isCompleted = openPieces.every(element => element === true);
+            console.log("IS COMPLETED", this.isCompleted);
+
+            if (this.isCompleted){
+                await savePuzzleCompleted(this.habitId);
+                console.log("is puzzle completed", this.isCompleted);
+            }
         }
 
         /* =============
@@ -215,8 +227,11 @@ function CanvasModule() {
                 selectedPiece.drawPieceImage();
                 selectedPiece.isDrawn = true;
                 //openPieces as array of true false
-                saveClickedPiece(this.habitId, selectedPiece.puzzle.getOpenPieces());
+                const openPieces = selectedPiece.puzzle.getOpenPieces();
+                selectedPiece.puzzle.openPieces = openPieces
+                saveClickedPiece(this.habitId, openPieces);
                 showModalLogUnit(this.habitId);
+                selectedPiece.puzzle.isPuzzleCompleted();
             }
         }
     }
@@ -239,7 +254,6 @@ function CanvasModule() {
             }
             const puzzleData = await puzzleDataRes.json();
             console.log("puzzle data", puzzleData);
-
             //const puzzleData = {'_id': 123, 'habitId': 456, 'openPieces': [false, false]}
             const puzzle = new Puzzle(rows, cols, image, canvas, puzzleData);
             puzzle.initialize();

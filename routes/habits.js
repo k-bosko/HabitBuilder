@@ -103,12 +103,14 @@ router.post("/", fileUpload(), async (req, res) => {
     }
 });
 
+
 router.get("/myHabitsWithAwards", async function (req, res) {
     const myHabitsWithAwards = await mongo.getHabitsWithAwards();
     console.log("got habits wtih awards", myHabitsWithAwards);
 
     res.status(200).json(myHabitsWithAwards);
 });
+
 // /* ------Anshul End ----- */
 
 /* ------Katerina start ----- */
@@ -124,7 +126,7 @@ router.post("/:id/log", async function (req, res) {
         await mongo.insertLogUnits(habitId, logUnits);
         res.status(200);
     } catch (err) {
-        console.log("Something went wrong.");
+        console.log("Something went wrong");
     }
 });
 

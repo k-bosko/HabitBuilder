@@ -146,10 +146,8 @@ function MongoHabitsModule() {
 
             const query = {
                 habitId: ObjectId(habitId),
-                //TODO add date?
             };
 
-            //NOTE: new opened pieces are added to array
             const append = {
                 $set: {
                     openPieces: openPieces,
@@ -165,6 +163,41 @@ function MongoHabitsModule() {
         }
     }
 
+    async function updatePuzzleIsCompleted(habitId) {
+        console.log("INSIDE updatePuzzleIsCompleted")
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            //const puzzlesCollection = mongo.collection(COLLECTION_PUZZLES);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
+
+            const query = {
+                _id: ObjectId(habitId),
+            };
+
+            const append = {
+                $set: {
+                    isCompleted: true,
+                },
+            };
+
+            //const result = await puzzlesCollection.updateOne(query, append);
+            const result = await habitsCollection.updateOne(query, append);
+
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+
+    db.updatePuzzleIsCompleted = updatePuzzleIsCompleted;
     db.getPuzzleFromDB = getPuzzleFromDB;
     db.insertPieceOpened = insertPieceOpened;
     db.getHabits = getHabits;
@@ -198,7 +231,7 @@ function MongoHabitsModule() {
                 goalPerDay: goalPerDay,
                 numberOfDays: numberOfDays,
                 picture: picture,
-                status: "incomplete",
+                isCompleted: false,
             };
 
             console.log(query);
@@ -216,7 +249,6 @@ function MongoHabitsModule() {
             await client.close();
         }
     }
-    db.createHabits = createHabits;
 
     async function getHabitsWithAwards() {
         // user id
@@ -231,7 +263,7 @@ function MongoHabitsModule() {
             const habitsCollection = mongo.collection(COLLECTION_HABITS);
 
             let query = {
-                status: "completed",
+                isCompleted: true,
             };
 
             console.log(query);
@@ -244,6 +276,8 @@ function MongoHabitsModule() {
             await client.close();
         }
     }
+
+    db.createHabits = createHabits;
     db.getHabitsWithAwards = getHabitsWithAwards;
     /* ------Anshul End----- */
 

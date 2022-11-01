@@ -56,3 +56,10 @@ async function saveClickedPiece(habitId, openPiecesArray) {
         },
     });
 };
+
+async function savePuzzleCompleted(habitId){
+    console.log("INSIDE savePuzzleCompleted");
+    await fetch(`/api/puzzles/${habitId}/completed`);
+}
+
+
