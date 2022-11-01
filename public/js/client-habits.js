@@ -11,7 +11,7 @@ function LoadHabitsModule() {
             return console.log("Error downloading the habits", res);
         }
         const habits = await res.json();
-        console.log("in LoadHabitsModule habits", habits);
+        console.log("in LoadHabitsModule LOADING HABITS", habits);
         renderHabits(habits);
     }
 
@@ -33,7 +33,6 @@ function LoadHabitsModule() {
         console.log("render habit", h);
         const habitsDiv = document.createElement("div");
         const canvas = document.createElement("canvas");
-        // canvas.className = "col-sm-12 col-md-8 mycanvas";
         canvas.className = "mycanvas";
         const logAndLabel = document.createElement("div");
         logAndLabel.className = "d-flex justify-content-center";

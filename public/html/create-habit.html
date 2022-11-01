@@ -50,7 +50,11 @@
                             >
                         </li>
                         <li class="nav-item">
-                            <a class="nav-item nav-link" href="#">Awards</a>
+                            <a
+                                class="nav-item nav-link"
+                                href="./awards-page.html"
+                                >Awards</a
+                            >
                         </li>
                         <li class="nav-item me-3">
                             <a class="nav-item nav-link" href="#">Log out</a>
@@ -66,7 +70,7 @@
                     <div class="col-md-2"></div>
                 </div>
                 <form
-                    action="/createHabit"
+                    action="/api/myhabits"
                     enctype="multipart/form-data"
                     method="post"
                 >
@@ -179,7 +183,7 @@
                             <label class="drinkcard-cc" for="beach">
                                 <img
                                     class="size"
-                                    src="../assets/images/beach.jpeg"
+                                    src="../assets/images/beach.jpg"
                                 />
                             </label>
                         </div>
@@ -202,7 +206,7 @@
                             class="js-radio"
                             id="img"
                             name="img"
-                            accept="image/*"
+                            accept=".png, .jpg, .jpeg"
                             disabled
                             onclick="EnableDisableTextBox()"
                         />

@@ -38,11 +38,14 @@ function MongoHabitsModule() {
             const habitsCollection = mongo.collection(COLLECTION_HABITS);
             const puzzleCollection = mongo.collection(COLLECTION_PUZZLES);
 
-            const resultHabit = await habitsCollection.deleteOne(
-                { _id: ObjectId(habitId) });
+            const resultHabit = await habitsCollection.deleteOne({
+                _id: ObjectId(habitId),
+            });
 
             if (resultHabit.deletedCount === 1) {
-                console.log("Successfully deleted one document in Habits Collection.");
+                console.log(
+                    "Successfully deleted one document in Habits Collection."
+                );
             } else {
                 console.log(
                     "No documents matched the query in Habits Collection. \
@@ -50,11 +53,14 @@ function MongoHabitsModule() {
                 );
             }
 
-            const resultPuzzle = await puzzleCollection.deleteOne(
-                { habitId: ObjectId(habitId) });
+            const resultPuzzle = await puzzleCollection.deleteOne({
+                habitId: ObjectId(habitId),
+            });
 
             if (resultPuzzle.deletedCount === 1) {
-                console.log("Successfully deleted one document in Puzzles Collection.");
+                console.log(
+                    "Successfully deleted one document in Puzzles Collection."
+                );
             } else {
                 console.log(
                     "No documents matched the query in Puzzles Collection. \
@@ -124,7 +130,7 @@ function MongoHabitsModule() {
         } finally {
             await client.close();
         }
-    };
+    }
 
     async function insertPieceOpened(habitId, openPieces) {
         console.log("Inside mongo: got pieceOpenedIndex", openPieces);
@@ -140,10 +146,8 @@ function MongoHabitsModule() {
 
             const query = {
                 habitId: ObjectId(habitId),
-                //TODO add date?
             };
 
-            //NOTE: new opened pieces are added to array
             const append = {
                 $set: {
                     openPieces: openPieces,
@@ -159,7 +163,41 @@ function MongoHabitsModule() {
         }
     }
 
+    async function updatePuzzleIsCompleted(habitId) {
+        console.log("INSIDE updatePuzzleIsCompleted")
+        let client;
 
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            //const puzzlesCollection = mongo.collection(COLLECTION_PUZZLES);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
+
+            const query = {
+                _id: ObjectId(habitId),
+            };
+
+            const append = {
+                $set: {
+                    isCompleted: true,
+                },
+            };
+
+            //const result = await puzzlesCollection.updateOne(query, append);
+            const result = await habitsCollection.updateOne(query, append);
+
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+
+    db.updatePuzzleIsCompleted = updatePuzzleIsCompleted;
     db.getPuzzleFromDB = getPuzzleFromDB;
     db.insertPieceOpened = insertPieceOpened;
     db.getHabits = getHabits;
@@ -193,14 +231,15 @@ function MongoHabitsModule() {
                 goalPerDay: goalPerDay,
                 numberOfDays: numberOfDays,
                 picture: picture,
+                isCompleted: false,
             };
 
             console.log(query);
 
             const result = await habitsCollection.insertOne(query);
             await puzzlesCollection.insertOne({
-                'habitId': result.insertedId,
-                'openPieces': new Array(Number(numberOfDays)).fill(false)
+                habitId: result.insertedId,
+                openPieces: new Array(Number(numberOfDays)).fill(false),
             });
 
             console.log(result);
@@ -210,7 +249,36 @@ function MongoHabitsModule() {
             await client.close();
         }
     }
+
+    async function getHabitsWithAwards() {
+        // user id
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
+
+            let query = {
+                isCompleted: true,
+            };
+
+            console.log(query);
+
+            const result = await habitsCollection.find(query).toArray();
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+
     db.createHabits = createHabits;
+    db.getHabitsWithAwards = getHabitsWithAwards;
     /* ------Anshul End----- */
 
     return db;

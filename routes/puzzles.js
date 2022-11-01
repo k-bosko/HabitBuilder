@@ -18,6 +18,16 @@ router.post("/:habitId/clicked", async function (req, res) {
     res.status(200);
 });
 
+router.get("/:habitId/completed", async function (req, res) {
+    const habitId = req.params.habitId;
+
+    await mongo.updatePuzzleIsCompleted(habitId);
+    //TODO add error handling
+    res.status(200);
+});
+
+
+
 router.get("/:habitId", async function (req, res) {
 
     const habitId = req.params.habitId;
