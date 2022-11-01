@@ -6,7 +6,7 @@ function LoadHabitsModule() {
     const habitsDeleteDiv = document.querySelector("div#dropdown-delete");
 
     async function loadHabits() {
-        const res = await fetch("http://localhost:3000/api/myhabits");
+        const res = await fetch("/api/myhabits");
         if (!(res.ok && res.status === 200)) {
             return console.log("Error downloading the habits", res);
         }

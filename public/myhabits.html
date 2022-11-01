@@ -74,7 +74,7 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Enter logging units:</label>
-              <input type="number" class="form-control" name="logUnits" id="logUnits" />
+              <input type="number" class="form-control" name="logUnits" id="logUnits" min="1" required/>
             </div>
             <div class="d-flex justify-content-end">
               <button type="button" class="btn close-modal-btn" data-bs-dismiss="modal">
@@ -106,7 +106,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
     integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
     crossorigin="anonymous"></script>
-  <script src="/js/draw-complex-shape.js"></script>
   <script src="/js/client-events.js"></script>
   <script src="/js/client-canvas.js"></script>
   <script src="/js/client-habits.js"></script>

@@ -3,12 +3,12 @@ function CanvasModule() {
     let _canvases;
     let _puzzles = [];
 
-    //TODO extend factorize with other options from create-habit.html
     const factorize = {
         "4": {"rows": 2, "cols": 2},
         "6": {"rows": 2, "cols": 3},
         "8": {"rows": 2, "cols": 4},
         "9": {"rows": 3, "cols": 3},
+        "10": {"rows": 5, "cols": 5},
         "12": {"rows": 3, "cols": 4},
         "14": {"rows": 2, "cols": 7},
         "15": {"rows": 3, "cols": 5},
@@ -25,7 +25,9 @@ function CanvasModule() {
     };
 
     class Piece {
-        constructor(rowIndex, colIndex, index, size, img, context){
+        constructor(puzzle, rowIndex, colIndex, index, size, img, context, isOpened){
+            this.puzzle = puzzle
+
             this.context = context;
             this.img = img;
             this.numRows = size.rows;
@@ -46,7 +48,7 @@ function CanvasModule() {
 
             //piece status
             this.highlighted = false;
-            this.isDrawn = false;
+            this.isDrawn = isOpened;
         }
 
         //draw piece
@@ -103,7 +105,7 @@ function CanvasModule() {
 
     class Puzzle {
         size = {}
-        constructor(rows, cols, image, canvas) {
+        constructor(rows, cols, image, canvas, puzzleData) {
             const maxWidth = 600;
 
             this.image = image;
@@ -122,6 +124,9 @@ function CanvasModule() {
             this.size.cols = cols;
             this.pieces = [];
             this.context = canvas.getContext('2d');
+
+            this.habitId = puzzleData.habitId;
+            this.openPieces = puzzleData.openPieces;
         }
 
         initialize(){
@@ -147,12 +152,25 @@ function CanvasModule() {
             let index = 0;
             for (let rowInd = 0; rowInd < rows; rowInd++){
                 for (let colInd = 0; colInd < cols; colInd++){
-                    let piece = new Piece(rowInd, colInd, index, this.size, this.image, this.context)
+                    const isOpened = Boolean(this.openPieces[index])
+                    let piece = new Piece(
+                        this, rowInd, colInd, index,
+                        this.size, this.image, this.context,
+                        isOpened
+                    );
                     this.pieces.push(piece);
                     console.log(piece);
                     index++;
                 }
             }
+        }
+
+        getOpenPieces() {
+            let openPieces = new Array(this.pieces.length).fill(false);
+            for (const piece of this.pieces) {
+                openPieces[piece.index] = piece.isDrawn;
+            }
+            return openPieces;
         }
 
         /* =============
@@ -193,9 +211,12 @@ function CanvasModule() {
         onMouseClick(evt){
             const selectedPiece = this.getPiece(evt);
 
-            if (selectedPiece !== null){
+            if (selectedPiece !== null && selectedPiece.isDrawn === false){
                 selectedPiece.drawPieceImage();
                 selectedPiece.isDrawn = true;
+                //openPieces as array of true false
+                saveClickedPiece(this.habitId, selectedPiece.puzzle.getOpenPieces());
+                showModalLogUnit(this.habitId);
             }
         }
     }
@@ -208,19 +229,25 @@ function CanvasModule() {
             const image = new Image();
             image.src = canvasObject.image;
             await image.decode();
+            const numOfDays = String(canvasObject.numberOfDays);
+            const rows = factorize[numOfDays].rows;
+            const cols = factorize[numOfDays].cols;
 
-            const rows = factorize[canvasObject.numberOfDays].rows;
-            const cols = factorize[canvasObject.numberOfDays].cols;
+            const puzzleDataRes = await fetch(`/api/puzzles/${habitId}`, { "method": "get" });
+            if (!(puzzleDataRes.ok && puzzleDataRes.status === 200)) {
+                return console.log("Error downloading puzzle data", puzzleDataRes);
+            }
+            const puzzleData = await puzzleDataRes.json();
+            console.log("puzzle data", puzzleData);
 
-            const puzzle = new Puzzle(rows, cols, image, canvas);
+            //const puzzleData = {'_id': 123, 'habitId': 456, 'openPieces': [false, false]}
+            const puzzle = new Puzzle(rows, cols, image, canvas, puzzleData);
             puzzle.initialize();
             _puzzles.push(puzzle);
         }
-        //TODO push _puzzles into puzzle collection on mongo
         console.log(_puzzles);
+
     }
-
-
 
     function renderImages() {
         console.log("render images", _canvases);
