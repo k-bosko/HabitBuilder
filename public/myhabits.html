@@ -1,116 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>HabitBuilder</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+        />
+        <link href="/css/main.css" rel="stylesheet" />
+    </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HabitBuilder</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
-  <link href="/css/main.css" rel="stylesheet" />
-</head>
-
-<body>
-  <!-- ======= Header ======= -->
-  <header>
-    <nav class="navbar navbar-expand-lg custom-navbar">
-      <img src="/assets/images/logo2.png" alt="jigsaw-puzzle-logo" height="45" class="ms-3" />
-      <a class="navbar-brand ps-2" href="/">HabitBuilder</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-item nav-link active" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="/myhabits">My Habits</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="#">Awards</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-item nav-link" href="#">Log out</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- End Header -->
-  <main>
-    <div class="container">
-      <h1>My Habits</h1>
-      <div class="row">
-        <div class="col-md-2">
-          <!-- Anshul anchor tag approach -->
-          <div>
-            <a href="./html/create-habit.html">
-              <span class="btn custom-plus-button">
-                <i class="bi bi-plus"></i>
-              </span>
-            </a>
-            <span class="ms-2">New Habit</span>
-          </div>
-          <!-- end approach -->
-        </div>
-        <div class="col-md-2 dropdown">
-          <button class="custom-delete-button btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <i class="bi bi-x"></i>
-          </button>
-          <span class="ms-2">Delete Habit</span>
-          <div id="dropdown-delete"></div>
-        </div>
-      </div>
-      <div id="habits"></div>
-    </div>
-    <!-- Modal on Log button -->
-    <div class="modal fade" id="modalOnLogBtn" tabindex="-1" aria-labelledby="ModalDialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="message-text" class="col-form-label">Enter logging units:</label>
-              <input type="number" class="form-control" name="logUnits" id="logUnits" />
+    <body>
+        <!-- ======= Header ======= -->
+        <header>
+            <nav class="navbar navbar-expand-lg custom-navbar">
+                <img
+                    src="/assets/images/logo2.png"
+                    alt="jigsaw-puzzle-logo"
+                    height="45"
+                    class="ms-3"
+                />
+                <a class="navbar-brand ps-2" href="/">HabitBuilder</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-item nav-link active" href="/"
+                                >Home</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" href="/myhabits"
+                                >My Habits</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-item nav-link"
+                                href="./html/awards-page.html"
+                                >Awards</a
+                            >
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-item nav-link" href="#">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- End Header -->
+        <main>
+            <div class="container">
+                <h1>My Habits</h1>
+                <div class="row">
+                    <div class="col-md-2">
+                        <!-- Anshul anchor tag approach -->
+                        <div>
+                            <a href="./html/create-habit.html">
+                                <span class="btn custom-plus-button">
+                                    <i class="bi bi-plus"></i>
+                                </span>
+                            </a>
+                            <span class="ms-2">New Habit</span>
+                        </div>
+                        <!-- end approach -->
+                    </div>
+                    <div class="col-md-2 dropdown">
+                        <button
+                            class="custom-delete-button btn dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <i class="bi bi-x"></i>
+                        </button>
+                        <span class="ms-2">Delete Habit</span>
+                        <div id="dropdown-delete"></div>
+                    </div>
+                </div>
+                <div id="habits"></div>
             </div>
-            <div class="d-flex justify-content-end">
-              <button type="button" class="btn close-modal-btn" data-bs-dismiss="modal">
-                Close
-              </button>
-              <button type="button" class="btn save-modal-btn ms-2" id="button-save" onclick="saveLogUnits(event)">
-                Save
-              </button>
-              <div></div>
+            <!-- Modal on Log button -->
+            <div
+                class="modal fade"
+                id="modalOnLogBtn"
+                tabindex="-1"
+                aria-labelledby="ModalDialog"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label"
+                                    >Enter logging units:</label
+                                >
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="logUnits"
+                                    id="logUnits"
+                                />
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button
+                                    type="button"
+                                    class="btn close-modal-btn"
+                                    data-bs-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn save-modal-btn ms-2"
+                                    id="button-save"
+                                    onclick="saveLogUnits(event)"
+                                >
+                                    Save
+                                </button>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Modal on Log button -->
-  </main>
-  <!-- ======= Footer ======= -->
-  <footer class="footer">
-    <div class="container">
-      <div class="col-md-12 text-center text-muted mt-4">
-        Created with ♥️ by Katerina Bosko & Anshul Mathew
-      </div>
-    </div>
-  </footer>
-  <!-- End Footer -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-    crossorigin="anonymous"></script>
-  <script src="/js/draw-complex-shape.js"></script>
-  <script src="/js/client-events.js"></script>
-  <script src="/js/client-canvas.js"></script>
-  <script src="/js/client-habits.js"></script>
-  <script src="/js/client-habits-main.js"></script>
-</body>
-
+            <!-- End Modal on Log button -->
+        </main>
+        <!-- ======= Footer ======= -->
+        <footer class="footer">
+            <div class="container">
+                <div class="col-md-12 text-center text-muted mt-4">
+                    Created with ♥️ by Katerina Bosko & Anshul Mathew
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"
+        ></script>
+        <script src="/js/draw-complex-shape.js"></script>
+        <script src="/js/client-events.js"></script>
+        <script src="/js/client-canvas.js"></script>
+        <script src="/js/client-habits.js"></script>
+        <script src="/js/client-habits-main.js"></script>
+    </body>
 </html>

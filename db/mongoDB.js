@@ -36,8 +36,9 @@ function MongoHabitsModule() {
             const mongo = client.db(DB_NAME);
             const habitsCollection = mongo.collection(COLLECTION_NAME);
 
-            const result = await habitsCollection.deleteOne(
-                { _id: ObjectId(habitId) });
+            const result = await habitsCollection.deleteOne({
+                _id: ObjectId(habitId),
+            });
             if (result.deletedCount === 1) {
                 console.log("Successfully deleted one document.");
             } else {
@@ -115,11 +116,10 @@ function MongoHabitsModule() {
                 goalPerDay: goalPerDay,
                 numberOfDays: numberOfDays,
                 picture: picture,
+                status: "incomplete",
             };
 
             console.log(query);
-
-            //NOTE: new logUnits are added to array
 
             const result = await habitsCollection.insertOne(query);
             console.log(result);
@@ -130,6 +130,34 @@ function MongoHabitsModule() {
         }
     }
     db.createHabits = createHabits;
+
+    async function getHabitsWithAwards() {
+        // user id
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_NAME);
+
+            let query = {
+                status: "completed",
+            };
+
+            console.log(query);
+
+            const result = await habitsCollection.find(query).toArray();
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+    db.getHabitsWithAwards = getHabitsWithAwards;
     /* ------Anshul End----- */
 
     return db;
