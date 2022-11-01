@@ -1,5 +1,7 @@
-# Habit Tracker 
+# Habit Builder 
+Created with ♥️ by Katerina Bosko & Anshul Mathew
 
+[Web Development](https://johnguerra.co/classes/webDevelopment_fall_2022/) course @ Northeastern University
 ## _Getting better 21 days at a time_
  
 Habit tracker is not just any boring habit building it. It is  unique in such a way that it gamefies the process of habit builing by encouraging you to unlock pieces of a puzzle. The pieces of the puzzle are made available to be unlocked day by day. The user then unlocks a piece by entering the quanta of work that he/she did on that day. 
@@ -58,5 +60,7 @@ Open up a browser and navigate to ```http://localhost:3000/```
 MIT
 **Free Software, Hell Yeah!**
 
+## Acknowledgement
+Puzzle logic inspired by [JavaScript Tutorial - PuzzleCam Game](https://www.youtube.com/watch?v=HS6KHYIYdXc) by Radu Mariescu-Istodor.
 
-Created with ♥️ by Katerina Bosko & Anshul Mathew
+
