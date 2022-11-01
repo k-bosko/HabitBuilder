@@ -19,6 +19,7 @@ router.get("/myhabits", (req, res) => {
 /* ------Katerina end----- */
 
 router.use((req, res) => {
+    console.log(req);
     res.status(404).redirect("/404.html");
 });
 

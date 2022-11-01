@@ -16,11 +16,11 @@ const logUnitModal = new bootstrap.Modal("#modalOnLogBtn");
 
 function showModalLogUnit(habitId) {
     logUnitModal.show();
-
+    document.querySelector("#logUnits").value="";
     const exampleModal = document.querySelector("#modalOnLogBtn");
     const buttonSave = exampleModal.querySelector("#button-save");
     buttonSave.setAttribute("data-habit-id", habitId);
-}
+};
 
 
 async function saveLogUnits(event) {
@@ -38,4 +38,21 @@ async function saveLogUnits(event) {
         },
     });
     //TODO add error handling
-}
+};
+
+async function saveClickedPiece(habitId, openPiecesArray) {
+    console.log("GOT openPiecesArray", openPiecesArray)
+
+    const bodyToSend = JSON.stringify({
+        "openPieces": openPiecesArray
+
+    });
+
+    await fetch(`/api/puzzles/${habitId}/clicked`, {
+        "method": "post",
+        "body": bodyToSend,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+    });
+};

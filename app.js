@@ -6,6 +6,7 @@ import path, { dirname } from "path";
 
 import indexRouter from "./routes/index.js";
 import habitsRouter from "./routes/habits.js";
+import puzzlesRouter from "./routes/puzzles.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/myhabits", habitsRouter);
+app.use("/api/puzzles", puzzlesRouter);
 app.use("/", indexRouter);
 
 export default app;

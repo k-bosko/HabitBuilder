@@ -4,7 +4,8 @@ function MongoHabitsModule() {
     const db = {};
     const url = process.env.MONGO_URL || "mongodb://0.0.0.0:27017/";
     const DB_NAME = "HabitBuilder";
-    const COLLECTION_NAME = "habits";
+    const COLLECTION_HABITS = "habits";
+    const COLLECTION_PUZZLES = "puzzles";
 
     /* ------Katerina----- */
     async function getHabits() {
@@ -16,7 +17,7 @@ function MongoHabitsModule() {
             console.log("Connected to Mongo Server");
 
             const mongo = client.db(DB_NAME);
-            const habitsCollection = mongo.collection(COLLECTION_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
 
             const habits = await habitsCollection.find().toArray();
             return habits;
@@ -34,19 +35,39 @@ function MongoHabitsModule() {
             console.log("Connected to Mongo Server");
 
             const mongo = client.db(DB_NAME);
-            const habitsCollection = mongo.collection(COLLECTION_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
+            const puzzleCollection = mongo.collection(COLLECTION_PUZZLES);
 
-            const result = await habitsCollection.deleteOne({
+            const resultHabit = await habitsCollection.deleteOne({
                 _id: ObjectId(habitId),
             });
-            if (result.deletedCount === 1) {
-                console.log("Successfully deleted one document.");
+
+            if (resultHabit.deletedCount === 1) {
+                console.log(
+                    "Successfully deleted one document in Habits Collection."
+                );
             } else {
                 console.log(
-                    "No documents matched the query. Deleted 0 documents."
+                    "No documents matched the query in Habits Collection. \
+                    Deleted 0 documents."
                 );
             }
-            return result;
+
+            const resultPuzzle = await puzzleCollection.deleteOne({
+                habitId: ObjectId(habitId),
+            });
+
+            if (resultPuzzle.deletedCount === 1) {
+                console.log(
+                    "Successfully deleted one document in Puzzles Collection."
+                );
+            } else {
+                console.log(
+                    "No documents matched the query in Puzzles Collection. \
+                    Deleted 0 documents."
+                );
+            }
+            return resultPuzzle;
         } finally {
             await client.close();
         }
@@ -63,7 +84,7 @@ function MongoHabitsModule() {
             console.log("Connected to Mongo Server");
 
             const mongo = client.db(DB_NAME);
-            const habitsCollection = mongo.collection(COLLECTION_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
 
             const query = {
                 _id: ObjectId(habitId),
@@ -86,6 +107,66 @@ function MongoHabitsModule() {
         }
     }
 
+    async function getPuzzleFromDB(habitId) {
+        console.log("got habitId", habitId);
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const puzzlesCollection = mongo.collection(COLLECTION_PUZZLES);
+
+            const query = {
+                habitId: ObjectId(habitId),
+            };
+
+            const puzzle = await puzzlesCollection.findOne(query);
+            console.log("RETURNING puzzle", puzzle);
+
+            return puzzle;
+        } finally {
+            await client.close();
+        }
+    }
+
+    async function insertPieceOpened(habitId, openPieces) {
+        console.log("Inside mongo: got pieceOpenedIndex", openPieces);
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const puzzlesCollection = mongo.collection(COLLECTION_PUZZLES);
+
+            const query = {
+                habitId: ObjectId(habitId),
+                //TODO add date?
+            };
+
+            //NOTE: new opened pieces are added to array
+            const append = {
+                $set: {
+                    openPieces: openPieces,
+                },
+            };
+
+            const result = await puzzlesCollection.updateOne(query, append);
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+
+    db.getPuzzleFromDB = getPuzzleFromDB;
+    db.insertPieceOpened = insertPieceOpened;
     db.getHabits = getHabits;
     db.deleteHabit = deleteHabit;
     db.insertLogUnits = insertLogUnits;
@@ -108,7 +189,8 @@ function MongoHabitsModule() {
             console.log("Connected to Mongo Server");
 
             const mongo = client.db(DB_NAME);
-            const habitsCollection = mongo.collection(COLLECTION_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
+            const puzzlesCollection = mongo.collection(COLLECTION_PUZZLES);
 
             let query = {
                 habit: habitName,
@@ -122,6 +204,11 @@ function MongoHabitsModule() {
             console.log(query);
 
             const result = await habitsCollection.insertOne(query);
+            await puzzlesCollection.insertOne({
+                habitId: result.insertedId,
+                openPieces: new Array(Number(numberOfDays)).fill(false),
+            });
+
             console.log(result);
 
             return result;
