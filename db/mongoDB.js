@@ -228,7 +228,7 @@ function MongoHabitsModule() {
             console.log("Connected to Mongo Server");
 
             const mongo = client.db(DB_NAME);
-            const habitsCollection = mongo.collection(COLLECTION_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
 
             let query = {
                 status: "completed",
