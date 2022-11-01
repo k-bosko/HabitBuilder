@@ -6,7 +6,6 @@ import fileUpload from "express-fileupload";
 
 const router = express.Router();
 
-
 //ROUTER TO /api/myhabits
 /* ------Katerina----- */
 
@@ -40,14 +39,14 @@ router.post("/createHabit", fileUpload(), (req, res) => {
     console.log(res);
     res.send("Received!!!");
 
-  let sampleFile = req.files.fileName;
+    let sampleFile = req.files.fileName;
 
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv("./" + sampleFile.name, function (err) {
-    if (err) return res.status(500).send(err);
+    // Use the mv() method to place the file somewhere on your server
+    sampleFile.mv("./" + sampleFile.name, function (err) {
+        if (err) return res.status(500).send(err);
 
-    res.send("Received!!!");
-  });
+        res.send("Received!!!");
+    });
 });
 // /* ------Anshul End ----- */
 
