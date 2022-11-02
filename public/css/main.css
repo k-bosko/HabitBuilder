@@ -41,13 +41,13 @@ button.custom-delete-button.btn.dropdown-toggle.show {
 }
 
 
-.log-btn{
+.update-btn{
     background-color: #13E3B9;
     text-align: center;
     font-size: 1.3rem;
 }
 
-.log-btn:hover{
+.update-btn:hover{
     background-color: #13E3B9;
     color: white;
 }

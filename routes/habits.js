@@ -130,6 +130,24 @@ router.post("/:id/log", async function (req, res) {
     }
 });
 
+/* POST myhabits log */
+router.post("/:id/update", async function (req, res) {
+    const habitId = req.params.id;
+    console.log(`habitId = ${habitId}`);
+
+    const updateHabit = req.body.updateHabit;
+    console.log(`updateHabit = ${updateHabit}`);
+
+    const result = await mongo.updateHabit(habitId, updateHabit);
+
+    if (result.acknowledged) {
+        console.log("habit was updated");
+        res.status(200).send();
+    } else {
+        console.log("no habit was updated");
+    }
+});
+
 /* ------Katerina end ----- */
 
 export default router;

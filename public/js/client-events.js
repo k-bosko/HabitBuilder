@@ -3,32 +3,70 @@
 async function deleteHabit(id) {
     console.log(`will delete habit with id ${id}`);
     const res = await fetch(`/api/myhabits/${id}`, { "method": "delete" });
-    //TODO add error handling
-
     // remove on UI
     if (res.ok) {
-        location.reload();
+        document.querySelectorAll(`.delete-item-${id}`).forEach(el => el.remove());
+    }
+};
+
+const habitModal = new bootstrap.Modal("#modalHabits");
+
+function showModalUpdateHabit(habitId) {
+    habitModal.show();
+    document.querySelector("#modalInput").value = "";
+    document.querySelector("#modalLabel").innerText = "Enter new habit name:";
+    const updateHabitModalElem = document.querySelector("#modalHabits");
+    const buttonSave = updateHabitModalElem.querySelector("#button-save");
+    buttonSave.onclick = (evt) => updateHabit(evt, habitId);
+    updateHabitModalElem.onkeydown = (evt) => {
+        if (evt.code === "Enter"){
+            updateHabit(evt, habitId)
+        }};
+};
+
+
+async function updateHabit(event, habitId) {
+
+    const newHabitLabel = document.querySelector("#modalInput").value;
+    const bodyToSend = JSON.stringify({ "updateHabit": newHabitLabel });
+    console.log("bodyToSend", bodyToSend);
+    habitModal.hide();
+
+    const res = await fetch(`/api/myhabits/${habitId}/update`, {
+        "method": "post",
+        "body": bodyToSend,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+    });
+
+    // update on UI
+    if (res.ok) {
+        document.querySelector(`.habit-label-${habitId}`).innerText = newHabitLabel;
     }
 };
 
 
-const logUnitModal = new bootstrap.Modal("#modalOnLogBtn");
-
 function showModalLogUnit(habitId) {
-    logUnitModal.show();
-    document.querySelector("#logUnits").value="";
-    const exampleModal = document.querySelector("#modalOnLogBtn");
-    const buttonSave = exampleModal.querySelector("#button-save");
-    buttonSave.setAttribute("data-habit-id", habitId);
+    habitModal.show();
+    document.querySelector("#modalInput").value = "";
+    const modalLabel = document.querySelector("#modalLabel")
+    modalLabel.innerText = "Enter logging units:";
+    const logUnitsModalElem = document.querySelector("#modalHabits");
+    const buttonSave = logUnitsModalElem.querySelector("#button-save");
+    buttonSave.onclick = (evt) => saveLogUnits(evt, habitId);
+    logUnitsModalElem.onkeydown = (evt) => {
+        if (evt.code === "Enter"){
+            saveLogUnits(evt, habitId)
+        }};
 };
 
 
-async function saveLogUnits(event) {
-    const habitId = event.target.getAttribute("data-habit-id");
-    const logUnits = document.querySelector("#logUnits").value;
+async function saveLogUnits(event, habitId) {
+    const logUnits = document.querySelector("#modalInput").value;
     const bodyToSend = JSON.stringify({ "logUnits": logUnits });
     console.log(bodyToSend);
-    logUnitModal.hide();
+    habitModal.hide();
 
     await fetch(`/api/myhabits/${habitId}/log`, {
         "method": "post",
@@ -48,13 +86,18 @@ async function saveClickedPiece(habitId, openPiecesArray) {
 
     });
 
-    await fetch(`/api/puzzles/${habitId}/clicked`, {
+    const res = await fetch(`/api/puzzles/${habitId}/clicked`, {
         "method": "post",
         "body": bodyToSend,
         "headers": {
             "Content-Type": "application/json"
         },
     });
+
+    // update on UI
+    if (res.ok) {
+        location.reload();
+    }
 };
 
 async function savePuzzleCompleted(habitId){

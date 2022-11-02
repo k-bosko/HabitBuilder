@@ -97,10 +97,10 @@
                 </div>
                 <div id="habits"></div>
             </div>
-            <!-- Modal on Log button -->
+            <!-- Modal modalHabits-->
             <div
                 class="modal fade"
-                id="modalOnLogBtn"
+                id="modalHabits"
                 tabindex="-1"
                 aria-labelledby="ModalDialog"
                 aria-hidden="true"
@@ -109,15 +109,14 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="message-text" class="col-form-label"
-                                    >Enter logging units:</label
+                                <label for="message-text" class="col-form-label" id="modalLabel"
+                                    ></label
                                 >
                                 <input
-                                    type="number"
+                                    type="text"
                                     class="form-control"
-                                    name="logUnits"
-                                    id="logUnits"
-                                    min="1"
+                                    name="modalInput"
+                                    id="modalInput"
                                     required
                                 />
                             </div>
@@ -133,7 +132,6 @@
                                     type="button"
                                     class="btn save-modal-btn ms-2"
                                     id="button-save"
-                                    onclick="saveLogUnits(event)"
                                 >
                                     Save
                                 </button>
@@ -143,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <!-- End Modal on Log button -->
+            <!-- End modalHabits -->
         </main>
         <!-- ======= Footer ======= -->
         <footer class="footer">

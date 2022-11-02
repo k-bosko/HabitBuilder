@@ -164,7 +164,7 @@ function MongoHabitsModule() {
     }
 
     async function updatePuzzleIsCompleted(habitId) {
-        console.log("INSIDE updatePuzzleIsCompleted")
+        console.log("INSIDE updatePuzzleIsCompleted");
         let client;
 
         try {
@@ -197,6 +197,41 @@ function MongoHabitsModule() {
         }
     }
 
+    async function updateHabit(habitId, updateHabit) {
+        console.log("got HabitId", habitId);
+        console.log("got updateHabit", updateHabit);
+        let client;
+
+        try {
+            client = new MongoClient(url);
+            await client.connect();
+            console.log("Connected to Mongo Server");
+
+            const mongo = client.db(DB_NAME);
+            const habitsCollection = mongo.collection(COLLECTION_HABITS);
+
+            const query = {
+                _id: ObjectId(habitId),
+                //TODO add date?
+            };
+
+            //NOTE: new logUnits are added to array
+            const update = {
+                $set: {
+                    habit: updateHabit,
+                },
+            };
+
+            const result = await habitsCollection.updateOne(query, update);
+            console.log(result);
+
+            return result;
+        } finally {
+            await client.close();
+        }
+    }
+
+    db.updateHabit = updateHabit;
     db.updatePuzzleIsCompleted = updatePuzzleIsCompleted;
     db.getPuzzleFromDB = getPuzzleFromDB;
     db.insertPieceOpened = insertPieceOpened;

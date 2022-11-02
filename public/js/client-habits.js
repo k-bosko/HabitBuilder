@@ -32,13 +32,14 @@ function LoadHabitsModule() {
     function renderHabit(h) {
         console.log("render habit", h);
         const habitsDiv = document.createElement("div");
+        habitsDiv.className = `delete-item-${h._id}`;
         const canvas = document.createElement("canvas");
         canvas.className = "mycanvas";
         const logAndLabel = document.createElement("div");
         logAndLabel.className = "d-flex justify-content-center";
         logAndLabel.innerHTML = `
-            <h3>${h.habit}</h3>
-            <button type="button" class="btn ms-4 log-btn" onclick="showModalLogUnit('${h._id}')">Log</button>
+            <h3 class="habit-label-${h._id}">${h.habit}</h3>
+            <button type="button" class="btn ms-4 update-btn" onclick="showModalUpdateHabit('${h._id}')">Rename</button>
         `;
 
         habitsDiv.appendChild(canvas);
@@ -62,7 +63,7 @@ function LoadHabitsModule() {
 
         for (let h of habits) {
             output += `
-      <li>
+      <li class="delete-item-${h._id}">
           <a class="dropdown-item" href="#" onclick="deleteHabit('${h._id}');">${h.habit}
           <div class="deleteX"><i class="bi bi-x"></i></div></a>
       </li>`;

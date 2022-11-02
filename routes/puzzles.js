@@ -13,9 +13,13 @@ router.post("/:habitId/clicked", async function (req, res) {
 
     console.log(`openPieces = ${openPieces}`);
 
-    await mongo.insertPieceOpened(habitId, openPieces);
-    //TODO add error handling
-    res.status(200);
+    const result = await mongo.insertPieceOpened(habitId, openPieces);
+
+    if (result.ok){
+        //TODO add error handling
+        res.status(200);
+    }
+
 });
 
 router.get("/:habitId/completed", async function (req, res) {
@@ -23,7 +27,7 @@ router.get("/:habitId/completed", async function (req, res) {
 
     await mongo.updatePuzzleIsCompleted(habitId);
     //TODO add error handling
-    res.status(200);
+    res.status(200).send();
 });
 
 
