@@ -47,34 +47,39 @@ async function updateHabit(event, habitId) {
 };
 
 
-function showModalLogUnit(habitId) {
+function showModalLogUnit(habitId, callback) {
     habitModal.show();
     document.querySelector("#modalInput").value = "";
     const modalLabel = document.querySelector("#modalLabel")
     modalLabel.innerText = "Enter logging units:";
     const logUnitsModalElem = document.querySelector("#modalHabits");
     const buttonSave = logUnitsModalElem.querySelector("#button-save");
-    buttonSave.onclick = (evt) => saveLogUnits(evt, habitId);
+    buttonSave.onclick = () => saveLogUnits(habitId, callback);
     logUnitsModalElem.onkeydown = (evt) => {
         if (evt.code === "Enter"){
-            saveLogUnits(evt, habitId)
+            saveLogUnits(habitId, callback)
         }};
 };
 
 
-async function saveLogUnits(event, habitId) {
+async function saveLogUnits(habitId, callback) {
     const logUnits = document.querySelector("#modalInput").value;
     const bodyToSend = JSON.stringify({ "logUnits": logUnits });
     console.log(bodyToSend);
     habitModal.hide();
 
-    await fetch(`/api/myhabits/${habitId}/log`, {
+    const res = await fetch(`/api/myhabits/${habitId}/log`, {
         "method": "post",
         "body": bodyToSend,
         "headers": {
             "Content-Type": "application/json"
         },
     });
+
+    if ( res.ok ) {
+        callback();
+    }
+    
     //TODO add error handling
 };
 
@@ -86,18 +91,13 @@ async function saveClickedPiece(habitId, openPiecesArray) {
 
     });
 
-    const res = await fetch(`/api/puzzles/${habitId}/clicked`, {
+    await fetch(`/api/puzzles/${habitId}/clicked`, {
         "method": "post",
         "body": bodyToSend,
         "headers": {
             "Content-Type": "application/json"
         },
     });
-
-    // update on UI
-    if (res.ok) {
-        location.reload();
-    }
 };
 
 async function savePuzzleCompleted(habitId){

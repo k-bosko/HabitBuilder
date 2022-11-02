@@ -124,9 +124,10 @@ router.post("/:id/log", async function (req, res) {
 
     try {
         await mongo.insertLogUnits(habitId, logUnits);
-        res.status(200);
+        res.status(200).send();
     } catch (err) {
         console.log("Something went wrong");
+        res.status(500).send();
     }
 });
 

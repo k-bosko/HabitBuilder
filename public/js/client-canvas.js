@@ -220,18 +220,22 @@ function CanvasModule() {
             }
         }
 
-        onMouseClick(evt){
+        async onMouseClick(evt){
             const selectedPiece = this.getPiece(evt);
 
-            if (selectedPiece !== null && selectedPiece.isDrawn === false){
-                selectedPiece.drawPieceImage();
+            const callback = async () => {
                 selectedPiece.isDrawn = true;
+                this.updateCanvas();
+
                 //openPieces as array of true false
                 const openPieces = selectedPiece.puzzle.getOpenPieces();
-                selectedPiece.puzzle.openPieces = openPieces
-                saveClickedPiece(this.habitId, openPieces);
-                showModalLogUnit(this.habitId);
+
+                await saveClickedPiece(this.habitId, openPieces);
                 selectedPiece.puzzle.isPuzzleCompleted();
+            }
+
+            if (selectedPiece !== null && selectedPiece.isDrawn === false){
+                showModalLogUnit(this.habitId, callback);
             }
         }
     }

@@ -99,7 +99,7 @@ function MongoHabitsModule() {
             };
 
             const result = await habitsCollection.updateOne(query, append);
-            console.log(result);
+            console.log(`got res - ${result.acknowledged}`);
 
             return result;
         } finally {

@@ -11,15 +11,9 @@ router.post("/:habitId/clicked", async function (req, res) {
     const habitId = req.params.habitId;
     const openPieces = req.body.openPieces;
 
-    console.log(`openPieces = ${openPieces}`);
-
-    const result = await mongo.insertPieceOpened(habitId, openPieces);
-
-    if (result.ok){
-        //TODO add error handling
-        res.status(200);
-    }
-
+    await mongo.insertPieceOpened(habitId, openPieces);
+    //TODO add error handling
+    res.status(200).send();
 });
 
 router.get("/:habitId/completed", async function (req, res) {
@@ -33,12 +27,10 @@ router.get("/:habitId/completed", async function (req, res) {
 
 
 router.get("/:habitId", async function (req, res) {
-
     const habitId = req.params.habitId;
-    console.log(`habitId = ${habitId}`);
 
     const puzzleData = await mongo.getPuzzleFromDB(habitId);
-    console.log("WILL RETURN", puzzleData)
+    //TODO add error handling
     res.status(200).json(puzzleData);
 });
 
