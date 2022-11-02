@@ -212,7 +212,6 @@ function MongoHabitsModule() {
 
             const query = {
                 _id: ObjectId(habitId),
-                //TODO add date?
             };
 
             //NOTE: new logUnits are added to array

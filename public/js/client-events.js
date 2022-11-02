@@ -1,5 +1,3 @@
-//TODO encapsulate into Module
-
 async function deleteHabit(id) {
     console.log(`will delete habit with id ${id}`);
     const res = await fetch(`/api/myhabits/${id}`, { "method": "delete" });
@@ -79,7 +77,7 @@ async function saveLogUnits(habitId, callback) {
     if ( res.ok ) {
         callback();
     }
-    
+
     //TODO add error handling
 };
 

@@ -15,10 +15,8 @@ function LoadHabitsWithAwardsModule() {
         console.log("in LoadHabitsWithAwards habits", habitsWithAwards);
         renderHabitsWithAwards(habitsWithAwards);
     }
-    function renderHabitsWithAwards(habitsWithAwards) {
-        //TODO think about limiting number of habits
-        // on page and adding another page if too many habits created?
 
+    function renderHabitsWithAwards(habitsWithAwards) {
         //clear it out first
         habitsSection.innerHTML = "";
         console.log(habitsWithAwards);
@@ -34,7 +32,6 @@ function LoadHabitsWithAwardsModule() {
 
         const habitWithAwardDiv = document.createElement("div");
         habitWithAwardDiv.className = "my-2";
-        // canvas.className = "col-sm-12 col-md-8 mycanvas";
         console.log(h.picture);
         habitWithAwardDiv.innerHTML = `
             <div class="py-2"><h4>Completed ${h.habit}  habit</h4> </div>

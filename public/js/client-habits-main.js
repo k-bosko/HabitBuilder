@@ -8,8 +8,6 @@ async function main() {
     canvasModule.init(loadHabitsModule.canvases);
     // canvasModule.renderImages();
 
-    console.log("LOAD HABITS MODULE", loadHabitsModule.canvases);
-
 }
 
 document.addEventListener("DOMContentLoaded", main);

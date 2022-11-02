@@ -9,18 +9,17 @@
   height: 40%;
   width: 30%;
 }
-.js-radio {
-}
+
 .cc-selector-2 input {
   position: absolute;
   z-index: 999;
 }
 
 .mountain {
-  background-image: url(../assets/images/mountain-1.jpg);
+  background-image: url(./images/mountain-1.jpg);
 }
 .beach {
-  background-image: url(../assets/images/beach.jpeg);
+  background-image: url(./images/beach.jpeg);
 }
 
 .cc-selector-2 input:active + .drinkcard-cc,
