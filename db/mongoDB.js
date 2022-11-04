@@ -1,18 +1,23 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
 function MongoHabitsModule() {
     const db = {};
-    const url = process.env.MONGO_URL || "mongodb://0.0.0.0:27017/";
+    const url = process.env.MONGODB_URI || "mongodb://0.0.0.0:27017/";
     const DB_NAME = "HabitBuilder";
     const COLLECTION_HABITS = "habits";
     const COLLECTION_PUZZLES = "puzzles";
+    const MONGO_DEFAULTS = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverApi: ServerApiVersion.v1,
+    };
 
     /* ------Katerina----- */
     async function getHabits() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -30,7 +35,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -79,7 +84,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -112,7 +117,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -137,7 +142,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -168,7 +173,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -203,7 +208,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -251,7 +256,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
@@ -289,7 +294,7 @@ function MongoHabitsModule() {
         let client;
 
         try {
-            client = new MongoClient(url);
+            client = new MongoClient(url, MONGO_DEFAULTS);
             await client.connect();
             console.log("Connected to Mongo Server");
 
